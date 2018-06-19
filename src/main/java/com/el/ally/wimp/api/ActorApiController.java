@@ -15,7 +15,7 @@ import com.el.ally.wimp.models.Actor;
 import com.el.ally.wimp.repositories.ActorRepository;
 
 @RestController
-@RequestMapping("/api/Actor")
+@RequestMapping("/api/actor")
 public class ActorApiController {
 
   private ActorRepository ActorRepo;

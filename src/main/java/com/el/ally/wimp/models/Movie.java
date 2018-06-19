@@ -1,19 +1,27 @@
 package com.el.ally.wimp.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="movie")
 public class Movie {
 
 	@Id
-    @GeneratedValue // Skip AUTO generation type
+	@GeneratedValue(generator="movie_id_seq", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="movie_id_seq", sequenceName="movie_id_seq")
     private int id;
 	
 	@Column(length=300, nullable=false)
@@ -28,6 +36,33 @@ public class Movie {
 	@Column(length=500, nullable=false)
 	String distributor;
 	
+	@JsonIgnore
+	@ManyToMany
+	private List<Actor> actors;
+	
+	public Movie() {
+		actors = new ArrayList<Actor>();
+	}
+	
+	public Movie(String string, java.sql.Date date, long l, String string2) {
+		title = string;
+		releaseDate = date;
+		budget = l;
+		distributor = string2;
+	}
+
+	public List<Actor> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<Actor> actors) {
+		this.actors = actors;
+	}
+	
+	public void addActor(Actor actor) {
+		this.actors.add(actor);
+	}
+
 	public int getId() {
 		return id;
 	}
